@@ -5,27 +5,47 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PrintAShop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="800">
+    <Window.DataContext>
+        <local:Entry/>
+    </Window.DataContext>
     <Grid Background="DarkGray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="350"/>
         </Grid.ColumnDefinitions>
 
-        <DataGrid Name="dgBilling" IsReadOnly="True" Grid.Column="0">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding ID}" />
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                <DataGridTextColumn Header="Producer" Binding="{Binding Producer}" />
-                <DataGridTextColumn Header="SKU" Binding="{Binding SKU}" />
-                <DataGridTextColumn Header="EAN" Binding="{Binding EAN}" />
-                <DataGridTextColumn Header="Price" Binding="{Binding Price}" />
-                <DataGridTextColumn Header="Net price" Binding="{Binding PriceNet}" />
-                <DataGridTextColumn Header="Invoice" Binding="{Binding Invoice}" />
-                <DataGridTextColumn Header="Date" Binding="{Binding Date}" />
+        <ListView x:Name="dgSearchResults" Grid.Column="0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}" />
+                    <GridViewColumn Header="Product" DisplayMemberBinding="{Binding Product}" />
+                    <GridViewColumn Header="Producer" DisplayMemberBinding="{Binding Producer}" />
+                    <GridViewColumn Header="SKU" DisplayMemberBinding="{Binding Sku}" />
+                    <GridViewColumn Header="EAN" DisplayMemberBinding="{Binding Ean}" />
+                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}" />
+                    <GridViewColumn Header="Net price" DisplayMemberBinding="{Binding NetPrice}" />
+                    <GridViewColumn Header="Invoice" DisplayMemberBinding="{Binding Invoice}" />
+                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
 
-            </DataGrid.Columns>
-        </DataGrid>
+        <ListView x:Name="dgBilling" Grid.Column="0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}" />
+                    <GridViewColumn Header="Product" DisplayMemberBinding="{Binding Product}" />
+                    <GridViewColumn Header="Producer" DisplayMemberBinding="{Binding Producer}" />
+                    <GridViewColumn Header="SKU" DisplayMemberBinding="{Binding Sku}" />
+                    <GridViewColumn Header="EAN" DisplayMemberBinding="{Binding Ean}" />
+                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}" />
+                    <GridViewColumn Header="Net price" DisplayMemberBinding="{Binding NetPrice}" />
+                    <GridViewColumn Header="Invoice" DisplayMemberBinding="{Binding Invoice}" />
+                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="4*"/>
@@ -46,15 +66,63 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBox Name="inName" Text="Name of product"  Grid.Column="0" Grid.Row="0" Margin="10,5,10,5" BorderThickness="2"/>
-                <TextBox Name="inProducer" Text="Producer" Grid.Column="0" Grid.Row="1" Margin="10,5,10,5" BorderThickness="2"/>
-                <TextBox Name="inSKU" Text="SKU" Grid.Column="0" Grid.Row="2" Margin="10,5,10,5" BorderThickness="2"/>
-                <TextBox Name="inEAN" Text="EAN" Grid.Column="0" Grid.Row="3" Margin="10,5,10,5" BorderThickness="2"/>
-                <TextBox Name="inpPrice" Text="Price" Grid.Column="1" Grid.Row="0" Margin="10,5,10,5" BorderThickness="2"/>
-                <TextBox Name="inNetPrice" Text="Net Price" Grid.Column="1" Grid.Row="1" Margin="10,5,10,5" BorderThickness="2"/>
-                <TextBox Name="inDate" Text="Date (DD-MM-YYYY)" Grid.Column="1" Grid.Row="2" Margin="10,5,10,5" BorderThickness="2"/>
-                <CheckBox Name="inInvoice" Content="Invoice" Grid.Column="1" Grid.Row="3" Margin="10,5,10,5" BorderThickness="2"/>
-                <Button Name="submit" Content="Add"  Grid.Column="1" Grid.Row="4" Height="20" Width="75" BorderThickness="2"/>
+                <Label Content="Product" Grid.Row="0" Grid.Column="0"/>
+                <TextBox x:Name="inProduct" 
+                         ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource self}}" 
+                         Text="{Binding Product, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"  
+                         Grid.Column="0" Grid.Row="0" Width="140" Height="25" BorderThickness="2" VerticalAlignment="Bottom"/>
+                <Label Content="Producer" Grid.Row="1" Grid.Column="0"/>
+                <TextBox x:Name="inProducer" 
+                         ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource self}}" 
+                         Text="{Binding Producer, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"  
+                         Grid.Column="0" Grid.Row="1" Width="140" Height="25" BorderThickness="2" VerticalAlignment="Bottom"/>
+                <Label Content="SKU" Grid.Row="2" Grid.Column="0"/>
+                <TextBox x:Name="inSKU"
+                         ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource self}}" 
+                         Text="{Binding Sku, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"  
+                         Grid.Column="0" Grid.Row="2" Width="140" Height="25" BorderThickness="2" VerticalAlignment="Bottom"/>
+                <Label Content="EAN" Grid.Row="3" Grid.Column="0"/>
+                <TextBox x:Name="inEAN" 
+                         ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource self}}" 
+                         Text="{Binding Ean, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"  
+                         Grid.Column="0" Grid.Row="3" Width="140" Height="25" BorderThickness="2" VerticalAlignment="Bottom"/>
+                <Label Content="Price" Grid.Row="0" Grid.Column="1"/>
+                <TextBox x:Name="inPrice" 
+                         ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource self}}" 
+                         Text="{Binding Price, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"  
+                         Grid.Column="1" Grid.Row="0" Width="140" Height="25" BorderThickness="2" VerticalAlignment="Bottom"/>
+                <Label Content="Net Pice" Grid.Row="1" Grid.Column="1"/>
+                <TextBox x:Name="inNetPrice" 
+                         ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource self}}" 
+                         Text="{Binding NetPrice, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"  
+                         Grid.Column="1" Grid.Row="1" Width="140" Height="25" BorderThickness="2" VerticalAlignment="Bottom"/>
+                <Label Content="Date (DD-MM-YYYY)" Grid.Row="2" Grid.Column="1"/>
+                <TextBox x:Name="inDate" 
+                         ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource self}}" 
+                         Text="{Binding Date, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"  
+                         Grid.Column="1" Grid.Row="2" Width="140" Height="25" BorderThickness="2" VerticalAlignment="Bottom"/>
+                <CheckBox x:Name="inInvoice" Content="Invoice" Grid.Column="1" Grid.Row="3" Width="140" Height="25" BorderThickness="2"/>
+                <Button x:Name="submit" Content="Add"  Grid.Column="1" Grid.Row="4" Width="140" Height="25" BorderThickness="2" Click="Button_Click_Submit">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inProduct}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inProducer}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inSKU}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inEAN}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inPrice}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inNetPrice}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inDate}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </Grid>
             <Grid Grid.Row="2" Background="Gray" Margin="5">
                 <Grid.ColumnDefinitions>
@@ -62,30 +130,139 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <TextBox Text="ID" Grid.Column="0" Height="20" Width="75" BorderThickness="2"/>
-                <Button Grid.Column="1" Content="Delete ID" Height="20" Width="75"/>
-                <Button Grid.Column="2" Content="Delete ALL" Height="20" Width="75"/>
+                <TextBox x:Name="inRemoveID" Text="ID" Grid.Column="0" Width="100" Height="25" BorderThickness="2"/>
+                <Button Grid.Column="1" Content="Delete ID" Width="100" Height="25" Click="Button_Click_Remove_ID"/>
+                <Button Grid.Column="2" Content="Delete ALL" Width="100" Height="25" Click="Button_Click_Remove_ALL"/>
             </Grid>
             <Grid Grid.Row="3" Background="Gray" Margin="5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Column="0" Grid.Row="0" Width="150" Height="25" Content="Bring Back Data" Click="Button_Click_BringBackData"/>
+                    <Button Grid.Column="0" Grid.Row="1" Width="150" Height="25" Content="Linear Search" Click="Button_Click_LinearSearch">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inProduct}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inProducer}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inSKU}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inEAN}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inPrice}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inNetPrice}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inDate}" Value="False"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Grid.Column="1" Grid.Row="1" Width="150" Height="25" Content="Binary Search" Click="Button_Click_BinarySearch">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inProduct}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inProducer}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inSKU}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inEAN}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inPrice}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inNetPrice}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inDate}" Value="False"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    
+                    <ComboBox x:Name="cb"  Width="125" Height="20" Grid.Column="1" Grid.Row="0">
+                        <ComboBoxItem x:Name="cbProduct" Content="Product" TabIndex="0"/>
+                        <ComboBoxItem x:Name="cbSKU" Content="SKU" TabIndex="1"/>
+                        <ComboBoxItem x:Name="cbEAN" Content="EAN" TabIndex="2"/>
+                        <ComboBoxItem x:Name="cbPrice" Content="Price" TabIndex="3"/>
+                        <ComboBoxItem x:Name="cbNetPrice" Content="NetPrice" TabIndex="4"/>
+                        <ComboBoxItem x:Name="cbInvoice" Content="Invoice" TabIndex="5"/>
+                        <ComboBoxItem x:Name="cbProducer" Content="Producer" TabIndex="6"/>
+                        <ComboBoxItem x:Name="cbDate" Content="Date" TabIndex="7"/>
+                    </ComboBox>
 
+                    <Button Grid.Column="0" Grid.Row="2" Width="150" Height="25" Content="Chain Search" Click="Button_Click_ChainSearch">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inProduct}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inProducer}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inSKU}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inEAN}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inPrice}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inNetPrice}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inDate}" Value="False"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <Button Grid.Column="1" Grid.Row="2" Width="150" Height="25" Content="Inverted Search" Click="Button_Click_InvertedSearch">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inProduct}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inProducer}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inSKU}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inEAN}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inPrice}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inNetPrice}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=inDate}" Value="False"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Grid>
             </Grid>
             <Grid Grid.Row="1" Background="Gray" Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBox Name="inAmmount" Text="Ammount" Grid.Column="0" Height="20" Width="75" BorderThickness="2"/>
-                <Button Name="Randomize" Content="Randomize" Height="20" Width="75" Grid.Column="1"/>
+                <TextBox x:Name="inAmmount" Text="Ammount" Grid.Column="0" Width="140" Height="25" BorderThickness="2"/>
+                <Button x:Name="Randomize" Content="Randomize" Width="140" Height="25" Grid.Column="1" Click="Button_Click_Randomize"/>
             </Grid>
             <Grid Grid.Row="4" Background="Gray" Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button Name="import" Content="Import" Grid.Column="0" Height="20" Width="75"/>
-                <Button Name="export" Content="Export" Grid.Column="1" Height="20" Width="75"/>
+                <Button x:Name="import" Content="Import" Grid.Column="0" Width="140" Height="25" Click="Button_Click_Import"/>
+                <Button x:Name="export" Content="Export" Grid.Column="1" Width="140" Height="25" Click="Button_Click_Export"/>
             </Grid>
         </Grid>
-        
+
+
     </Grid>
 </Window>
