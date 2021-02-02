@@ -204,6 +204,7 @@ namespace PrintAShop
             dgBilling.Items.Clear();
             InvertList.Clear();
             ChainList.Clear();
+            EntriesNum = 0;
 
             string json = System.IO.File.ReadAllText(@"C:\Users\szymo\source\repos\PWSZ\PrintAShop\database.json");
             Entries = JsonConvert.DeserializeObject<List<Entry>>(json);

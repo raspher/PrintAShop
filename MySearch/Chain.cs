@@ -118,8 +118,8 @@ namespace PrintAShop.MySearch
 
         public void Clear()
         {
-            bazaPocz.Clear();
-            bazaChain.Clear();
+            bazaPocz.ForEach(e => e.Clear());
+            bazaChain.ForEach(e => e.Clear());
         }
     }
 }
